@@ -1,9 +1,191 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>TRACC Humanoid</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffef">
+  <title>TRACC: Track-and-Complete</title>
+  <meta name="description" content="TRACC learns humanoid skills from a single failed human video by tracking its useful prefix and completing the intended outcome.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <style>html { zoom: 0.95 }</style>
 </head>
 <body>
-  <h1>Coming Soon</h1>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-paper" viewBox="0 0 24 24"><path d="M7 3.75h7.2L19 8.55v11.7H7zM14 3.75v5h5M9.75 13h6.5M9.75 16h4.75"/></symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M14 5l-4 14"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="m9 6 9 6-9 6z"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M8.5 6.5v11M15.5 6.5v11"/></symbol>
+    <symbol id="icon-volume" viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7l-4 3zm10.5-.5a4 4 0 0 1 0 5M17.5 7a7 7 0 0 1 0 10"/></symbol>
+    <symbol id="icon-muted" viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7l-4 3zm10-1 5 6m0-6-5 6"/></symbol>
+    <symbol id="icon-fullscreen" viewBox="0 0 24 24"><path d="M8.5 5H5v3.5M15.5 5H19v3.5M8.5 19H5v-3.5M15.5 19H19v-3.5"/></symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24"><path d="M9 8h10v11H9zM5 15V5h10"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="TRACC home">
+      <span class="brand-track"></span><span>TRACC</span><span class="brand-complete"></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#ablations">Ablations</a>
+      <a href="#rewards">Rewards</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="shell hero-inner">
+        <img class="hero-wordmark" src="assets/tracc_wordmark_v1_gradient.png" alt="TRACC" width="2172" height="724">
+        <h1><span class="hero-title-line">Track-and-Complete: Learning Humanoid</span> <span class="hero-title-line">Skills from a Single Failed Human Video</span></h1>
+        <div class="hero-actions" aria-label="Project resources">
+          <button class="action action-secondary" type="button" disabled>
+            <svg><use href="#icon-paper"></use></svg>
+            <span>Paper</span>
+            <small>soon</small>
+          </button>
+          <button class="action action-secondary" type="button" disabled>
+            <svg><use href="#icon-code"></use></svg>
+            <span>Code</span>
+            <small>soon</small>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="abstract">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="section-label"><span>01</span><span>Abstract</span></div>
+          <h2>Learning from failed human demonstrations.</h2>
+        </div>
+        <p class="abstract-copy">Learning humanoid skills from videos typically requires a successful human demonstration, which often demands
+              custom data collection. Although failures have traditionally been
+              treated only as negative examples in robot learning, they can
+              still reveal a usable trajectory prefix before the task fails, as well
+              as the intended outcome. To leverage this information from a
+              failed-attempt video, we propose TRACC, a pipeline that imitates
+              the useful portion of the motion trajectory and then completes
+              the task based on the inferred task outcome. The usable motion
+              prefix serves as prior knowledge until the failure occurs, after
+              which the task-completion reward guides the policy to learn the
+              intended task goal without requiring a successful task trajectory.
+              We evaluate our method on six in-the-wild failed human tasks
+              from the Oops! dataset. Our experimental results demonstrate
+              the effectiveness of the proposed approach for learning from
+              failed attempts when no successful demonstration is available.
+              Thus, these findings establish failed human videos as a viable
+              source of supervision for humanoid skill learning.</p>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="section-label"><span>02</span><span>Method</span></div>
+          <h2>Track the useful prefix. Complete the intended goal.</h2>
+          <p class="method-copy"><span>We treat a failed-attempt video sequence as a partial demonstration rather than a negative example. Given a failed attempt human video, we aim to learn a policy that reproduces the useful trajectory of the observed motion and completes the intended task.</span></p>
+        </div>
+        <video class="method-video" src="assets/method_video.mp4" autoplay loop muted playsinline preload="metadata" aria-label="TRACC method overview"></video>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="section-label"><span>03</span><span>Results</span></div>
+          <h2>Six failures. Six learned skills.</h2>
+        </div>
+
+        <div class="task-grid">
+          <article class="task-card">
+            <div class="task-copy"><span class="task-number">01</span><h3>Box Jump</h3></div>
+            <div class="video-player" data-player><video src="assets/task_box_jump.mp4" loop muted playsinline preload="metadata" aria-label="TRACC box jump result"></video><div class="video-controls"><button type="button" data-video-toggle aria-label="Play video"><svg><use href="#icon-play"></use></svg></button><span class="video-time" data-video-time>0:00</span><input data-video-seek type="range" min="0" max="100" value="0" step="0.01" aria-label="Video position"><button type="button" data-video-mute aria-label="Unmute video"><svg><use href="#icon-muted"></use></svg></button><button type="button" data-video-fullscreen aria-label="Enter fullscreen"><svg><use href="#icon-fullscreen"></use></svg></button></div></div>
+          </article>
+          <article class="task-card">
+            <div class="task-copy"><span class="task-number">06</span><h3>Log Walk</h3></div>
+            <div class="video-player" data-player><video src="assets/task_log_walk.mp4" loop muted playsinline preload="metadata" aria-label="TRACC log walk result"></video><div class="video-controls"><button type="button" data-video-toggle aria-label="Play video"><svg><use href="#icon-play"></use></svg></button><span class="video-time" data-video-time>0:00</span><input data-video-seek type="range" min="0" max="100" value="0" step="0.01" aria-label="Video position"><button type="button" data-video-mute aria-label="Unmute video"><svg><use href="#icon-muted"></use></svg></button><button type="button" data-video-fullscreen aria-label="Enter fullscreen"><svg><use href="#icon-fullscreen"></use></svg></button></div></div>
+          </article>
+          <article class="task-card">
+            <div class="task-copy"><span class="task-number">03</span><h3>Football</h3></div>
+            <div class="video-player" data-player><video src="assets/task_football.mp4" loop muted playsinline preload="metadata" aria-label="TRACC football result"></video><div class="video-controls"><button type="button" data-video-toggle aria-label="Play video"><svg><use href="#icon-play"></use></svg></button><span class="video-time" data-video-time>0:00</span><input data-video-seek type="range" min="0" max="100" value="0" step="0.01" aria-label="Video position"><button type="button" data-video-mute aria-label="Unmute video"><svg><use href="#icon-muted"></use></svg></button><button type="button" data-video-fullscreen aria-label="Enter fullscreen"><svg><use href="#icon-fullscreen"></use></svg></button></div></div>
+          </article>
+          <article class="task-card">
+            <div class="task-copy"><span class="task-number">04</span><h3>Kick Target</h3></div>
+            <div class="video-player" data-player><video src="assets/task_kick_target.mp4" loop muted playsinline preload="metadata" aria-label="TRACC target kick result"></video><div class="video-controls"><button type="button" data-video-toggle aria-label="Play video"><svg><use href="#icon-play"></use></svg></button><span class="video-time" data-video-time>0:00</span><input data-video-seek type="range" min="0" max="100" value="0" step="0.01" aria-label="Video position"><button type="button" data-video-mute aria-label="Unmute video"><svg><use href="#icon-muted"></use></svg></button><button type="button" data-video-fullscreen aria-label="Enter fullscreen"><svg><use href="#icon-fullscreen"></use></svg></button></div></div>
+          </article>
+          <article class="task-card">
+            <div class="task-copy"><span class="task-number">05</span><h3>Backflip</h3></div>
+            <div class="video-player" data-player><video src="assets/task_backflip.mp4" loop muted playsinline preload="metadata" aria-label="TRACC backflip result"></video><div class="video-controls"><button type="button" data-video-toggle aria-label="Play video"><svg><use href="#icon-play"></use></svg></button><span class="video-time" data-video-time>0:00</span><input data-video-seek type="range" min="0" max="100" value="0" step="0.01" aria-label="Video position"><button type="button" data-video-mute aria-label="Unmute video"><svg><use href="#icon-muted"></use></svg></button><button type="button" data-video-fullscreen aria-label="Enter fullscreen"><svg><use href="#icon-fullscreen"></use></svg></button></div></div>
+          </article>
+          <article class="task-card">
+            <div class="task-copy"><span class="task-number">02</span><h3>Handstand</h3></div>
+            <div class="video-player" data-player><video src="assets/task_handstand.mp4" loop muted playsinline preload="metadata" aria-label="TRACC handstand result"></video><div class="video-controls"><button type="button" data-video-toggle aria-label="Play video"><svg><use href="#icon-play"></use></svg></button><span class="video-time" data-video-time>0:00</span><input data-video-seek type="range" min="0" max="100" value="0" step="0.01" aria-label="Video position"><button type="button" data-video-mute aria-label="Unmute video"><svg><use href="#icon-muted"></use></svg></button><button type="button" data-video-fullscreen aria-label="Enter fullscreen"><svg><use href="#icon-fullscreen"></use></svg></button></div></div>
+          </article>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ablations">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="section-label"><span>04</span><span>Ablation studies</span></div>
+          <h2>One policy makes the handoff smooth.</h2>
+        </div>
+
+        <div class="frame-player" data-frame-player data-prefix="assets/ablation/log-walk/panel_" data-count="143" data-fps="30">
+          <div class="frame-stage">
+            <img src="assets/ablation/log-walk/panel_0000.webp" width="1400" height="740">
+          </div>
+          <div class="frame-controls">
+            <button type="button" data-frame-toggle aria-label="Pause frame sequence"><svg><use href="#icon-pause"></use></svg></button>
+            <input data-frame-seek type="range" min="0" max="142" value="0" step="1" aria-label="Ablation frame">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rewards">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="section-label"><span>05</span><span>Selected rewards</span></div>
+          <h2>VLM-generated selected reward candidates.</h2>
+        </div>
+
+        <div class="reward-layout">
+          <div class="reward-tabs" role="tablist" aria-label="Selected reward functions">
+            <button role="tab" aria-selected="true" tabindex="0" data-reward-tab="box-jump">Box jump</button>
+            <button role="tab" aria-selected="false" tabindex="-1" data-reward-tab="log-walk">Log walk</button>
+            <button role="tab" aria-selected="false" tabindex="-1" data-reward-tab="kick-target">Kick target</button>
+            <button role="tab" aria-selected="false" tabindex="-1" data-reward-tab="football">Football</button>
+            <button role="tab" aria-selected="false" tabindex="-1" data-reward-tab="backflip">Backflip</button>
+            <button role="tab" aria-selected="false" tabindex="-1" data-reward-tab="handstand">Handstand</button>
+          </div>
+
+          <div class="code-window" role="tabpanel" aria-live="polite">
+            <div class="code-titlebar">
+              <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span data-code-filename>reward_box_jump.py</span>
+              <button type="button" data-copy-code><svg><use href="#icon-copy"></use></svg><span>Copy</span></button>
+            </div>
+            <pre><code data-reward-code></code></pre>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <a class="brand" href="#top"><span class="brand-track"></span><span>TRACC: Track-and-Complete</span><span class="brand-complete"></span></a>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
 </body>
 </html>
