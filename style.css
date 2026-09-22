@@ -10,7 +10,7 @@
   --paper: #ffffff;
   --surface: #fdffff;
   --surface-soft: #ecece5;
-  --ink: #282a25;
+  --ink: #2d2e2b;
   --ink-soft: #62665d;
   --line: #dedfd5;
   --track: #0ba360;
@@ -168,6 +168,7 @@ a { color: inherit; }
   border-radius: 15px;
   font-size: 14px;
   font-weight: 700;
+  cursor: pointer;
   text-decoration: none;
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
@@ -176,7 +177,20 @@ a { color: inherit; }
 .action-secondary { border-color: var(--line); background: var(--surface); color: var(--ink); }
 .action-secondary small { padding: 3px 6px; border-radius: 6px; background: var(--surface-soft); color: var(--ink-soft); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
 .action-secondary:disabled { cursor: default; opacity: .72; }
+.action-primary { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.action svg.brandmark { fill: currentColor; stroke: none; }
 .action:hover:not(:disabled), .action:focus-visible { transform: translateY(-2px); outline: none; }
+
+.video-modal {
+  width: min(880px, 92vw);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #000;
+  overflow: hidden;
+}
+.video-modal::backdrop { background: rgba(23, 25, 20, .62); }
+.video-modal video { display: block; width: 100%; max-height: 78vh; }
 
 .section {
   padding: 88px 0;
@@ -368,7 +382,7 @@ p { margin: 0; }
   padding: 8px;
   border: 1px solid #31352f;
   border-radius: 20px;
-  background: #1a1d19;
+  background: #272926;
 }
 
 .reward-tabs button {
@@ -392,7 +406,7 @@ p { margin: 0; }
   overflow: hidden;
   border: 1px solid #31352f;
   border-radius: 20px;
-  background: #1a1d19;
+  background: #272926;
   box-shadow: 0 28px 80px rgba(0, 0, 0, .2);
 }
 
@@ -405,7 +419,7 @@ p { margin: 0; }
   border-bottom: 1px solid #31352f;
   color: #899087;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .window-dots { display: flex; gap: 6px; }
@@ -422,9 +436,9 @@ p { margin: 0; }
   padding: 7px 9px;
   border: 0;
   border-radius: 9px;
-  background: #252923;
+  background: #272926;
   color: #b4bab1;
-  font-size: 10px;
+  font-size: 11px;
   cursor: pointer;
 }
 

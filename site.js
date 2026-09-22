@@ -840,6 +840,20 @@ def reward(state):
     complete();
   });
 
+  var videoModal = document.querySelector("[data-video-modal]");
+  if (videoModal) {
+    var modalVideo = videoModal.querySelector("video");
+    document.querySelector("[data-video-open]").addEventListener("click", function () {
+      videoModal.showModal();
+      var started = modalVideo.play();
+      if (started) started.catch(function () {});
+    });
+    videoModal.addEventListener("click", function (event) {
+      if (event.target === videoModal) videoModal.close();
+    });
+    videoModal.addEventListener("close", function () { modalVideo.pause(); });
+  }
+
   selectReward("box-jump", false);
   console.assert(Object.keys(rewards).length === 6, "TRACC appendix reward manifest changed");
 })();
